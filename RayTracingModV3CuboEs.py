@@ -1,5 +1,7 @@
 from PIL import Image
 import numpy as np
+import glob
+import os
 
 ancho = 400
 alto = 300
@@ -197,6 +199,13 @@ for i, x in enumerate(np.linspace(pantalla[0], pantalla[2], ancho)):
             reflexion *= objeto.get("reflexion", 1.0)
         img[alto - j - 1, i, :] = np.clip(col, 0, 1)
 
-print("Imagen generada exitosamente, revise su escritorio!")
+# Obtener la lista de archivos en la carpeta
+archivos = glob.glob(os.path.join('./Imagenes/', '*'))
+    
+# Contar la cantidad de archivos
+cantidad_archivos = len(archivos)
+ruta = "./Imagenes/ray_tracing"+str(cantidad_archivos+1)+".png"
+
 guardarRayTracing = Image.fromarray((255 * img).astype(np.uint8), "RGB")
-guardarRayTracing.save("./ray_tracing.png")
+guardarRayTracing.save(ruta)
+print("Imagen generada exitosamente, revise su escritorio!")
