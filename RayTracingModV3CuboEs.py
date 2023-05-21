@@ -2,9 +2,15 @@ from PIL import Image
 import numpy as np
 import glob
 import os
+import platform
+
+is_windows = platform.platform().lower().startswith("windows")
 
 ancho = 400
 alto = 300
+
+# ancho = 1200
+# alto = 720
 
 # posicion de la luz y color.
 posicionLuz = np.array([2.0, 4.0, -5])
@@ -83,6 +89,8 @@ def interseccion(vectorO, vectorD, objeto):
         return interseccionPlano(vectorO, vectorD, objeto["posicion"], objeto["normal"])
     elif objeto["type"] == "esfera":
         return interseccionEsfera(vectorO, vectorD, objeto["posicion"], objeto["radio"])
+    else:
+        raise ValueError("Tipo de objeto no reconocido.")
 
 
 def obtenerNormal(objeto, vectorRayo):
@@ -90,6 +98,8 @@ def obtenerNormal(objeto, vectorRayo):
         vectorNormal = normalizarVector(vectorRayo - objeto["posicion"])
     elif objeto["type"] == "plano":
         vectorNormal = objeto["normal"]
+    else:
+        raise ValueError("Tipo de objeto no reconocido.")
 
     return vectorNormal
 
@@ -169,11 +179,11 @@ colorPlanePink = np.array([1.0, 0.752, 0.796])
 
 escena = [
     plano([0.0, -0.5, 0.0], [0.0, 1.0, 0.0]),
-    esfera([0.25, 0.1, 0.01], 0.1, [1.0, 1.0, 0.0], 0.4),
-    esfera([0.06, 0.1, 0.16], 0.1, [0.5, 0.223, 0.5], 0.4),
+    esfera([0.25, 0.1, 0.01], 0.1, [0.0, 1.0, 0.0], 0.6),
+    esfera([0.06, 0.1, 0.16], 0.1, [1.0, 0.0, 0.0], 0.4),
     esfera([-0.13, 0.1, 0.31], 0.1, [1.0, 0.572, 0.184], 0.4),
-    esfera([-0.32, 0.1, 0.46], 0.1, [0.5, 0.223, 0.5], 0.4),
-    esfera([-0.51, 0.1, 0.61], 0.1, [1.0, 0.572, 0.184], 0.4),
+    esfera([-0.32, 0.1, 0.46], 0.1, [1.0, 1.0, 0.0], 0.4),
+    esfera([-0.51, 0.1, 0.61], 0.1, [0.5, 0.223, 0.5], 0.4),
 ]
 
 for i, x in enumerate(np.linspace(pantalla[0], pantalla[2], ancho)):
@@ -200,11 +210,17 @@ for i, x in enumerate(np.linspace(pantalla[0], pantalla[2], ancho)):
         img[alto - j - 1, i, :] = np.clip(col, 0, 1)
 
 # Obtener la lista de archivos en la carpeta
-archivos = glob.glob(os.path.join('./Imagenes/', '*'))
-    
+archivos = glob.glob(
+    os.path.join("./Imagenes/", "*") if is_windows else os.path.join("./dist/", "*")
+)
+
 # Contar la cantidad de archivos
 cantidad_archivos = len(archivos)
-ruta = "./Imagenes/ray_tracing"+str(cantidad_archivos+1)+".png"
+ruta = (
+    f"./Imagenes/ray_tracing{cantidad_archivos+1}.png"
+    if is_windows
+    else f"./dist/ray_tracing{cantidad_archivos+1}.png"
+)
 
 guardarRayTracing = Image.fromarray((255 * img).astype(np.uint8), "RGB")
 guardarRayTracing.save(ruta)
