@@ -174,6 +174,8 @@ escena = [
     esfera([-0.13, 0.1, 0.31], 0.1, [1.0, 0.572, 0.184], 0.4),
     esfera([-0.32, 0.1, 0.46], 0.1, [0.5, 0.223, 0.5], 0.4),
     esfera([-0.51, 0.1, 0.61], 0.1, [1.0, 0.572, 0.184], 0.4),
+    esfera([0.25, 0.3, 0.61], 0.1, [1.0, 0.572, 0.184], 0.4),
+
 ]
 
 for i, x in enumerate(np.linspace(pantalla[0], pantalla[2], ancho)):
@@ -208,4 +210,4 @@ ruta = "./Imagenes/ray_tracing"+str(cantidad_archivos+1)+".png"
 
 guardarRayTracing = Image.fromarray((255 * img).astype(np.uint8), "RGB")
 guardarRayTracing.save(ruta)
-print("Imagen generada exitosamente, revise su escritorio!")
+print("Imagen generada exitosamente, revise la carpeta de Imagenes!")
