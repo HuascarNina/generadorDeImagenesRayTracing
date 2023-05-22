@@ -6,4 +6,4 @@ añadas mas sé tardara en generar la imagen. Diviertanse :). Pd: Le pueden agre
 la ruta donde guarda la imagen esta en las ultimas lineas. Suerte c:.
 
 ## Imagen generada con el algoritmo!
-![resultadoFinCubo](https://github.com/HuascarNina/generadorDeImagenesRayTracing/assets/79801795/0397c9e7-437e-4c96-be23-5c3bac5a03bd)
+![ray_tracing1](https://github.com/HuascarNina/generadorDeImagenesRayTracing/assets/79801795/0d78c6dd-77e8-4741-a9e0-c9aa008a2099)
